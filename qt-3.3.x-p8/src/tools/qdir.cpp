@@ -407,12 +407,12 @@ QString QDir::absFilePath( const QString &fileName,
 	int drv = fileName.upper()[0].latin1() - 'A' + 1;
 	if ( _getdrive() != drv ) {
 	    QT_WA( {
-		TCHAR buf[PATH_MAX];
-		::_wgetdcwd( drv, buf, PATH_MAX );
+		TCHAR buf[MAX_PATH];
+		::_wgetdcwd( drv, buf, MAX_PATH );
 		tmp.setUnicodeCodes( (ushort*)buf, (uint)::wcslen(buf) );
 	    }, {
-		char buf[PATH_MAX];
-		::_getdcwd( drv, buf, PATH_MAX );
+		char buf[MAX_PATH];
+		::_getdcwd( drv, buf, MAX_PATH );
 		tmp = buf;
 	    } );
 	    if ( !tmp.endsWith("\\") )
