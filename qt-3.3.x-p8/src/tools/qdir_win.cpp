@@ -5,7 +5,7 @@
 **
 ** Created : 20030709
 **
-** Copyright (C) 2003 Richard Lärkäng
+** Copyright (C) 2003 Richard LÃ¤rkÃ¤ng
 ** Copyright (C) 2004 Ralf Habacker
 ** Copyright (C) 2004 Christian Ehrlicher
 ** Copyright (C) 2004 Christopher January
@@ -101,11 +101,11 @@ QString QDir::canonicalPath() const
 {
     QString r;
 
-    char cur[ PATH_MAX ];
-    char tmp[ PATH_MAX ];
-    QT_GETCWD( cur, PATH_MAX );
+    char cur[ MAX_PATH ];
+    char tmp[ MAX_PATH ];
+    QT_GETCWD( cur, MAX_PATH );
     if ( QT_CHDIR( QFile::encodeName( dPath ) ) >= 0 ) {
-        QT_GETCWD( tmp, PATH_MAX );
+        QT_GETCWD( tmp, MAX_PATH );
         r = QFile::decodeName( tmp );
     }
     QT_CHDIR( cur );
@@ -183,12 +183,12 @@ QString QDir::currentDirPath()
     QString ret;
     QT_WA( {
                DWORD size = 0;
-               WCHAR currentName[ PATH_MAX ];
-               size = ::GetCurrentDirectoryW( PATH_MAX, currentName );
+               WCHAR currentName[ MAX_PATH ];
+               size = ::GetCurrentDirectoryW( MAX_PATH, currentName );
                if ( size != 0 ) {
-               if ( size > PATH_MAX ) {
+               if ( size > MAX_PATH ) {
                        WCHAR * newCurrentName = new WCHAR[ size ];
-                       if ( ::GetCurrentDirectoryW( PATH_MAX, newCurrentName ) != 0 )
+                       if ( ::GetCurrentDirectoryW( MAX_PATH, newCurrentName ) != 0 )
                            ret = QString::fromUcs2( ( ushort* ) newCurrentName );
                        delete [] newCurrentName;
                    } else {
@@ -197,8 +197,8 @@ QString QDir::currentDirPath()
                }
            } , {
                DWORD size = 0;
-               char currentName[ PATH_MAX ];
-               size = ::GetCurrentDirectoryA( PATH_MAX, currentName );
+               char currentName[ MAX_PATH ];
+               size = ::GetCurrentDirectoryA( MAX_PATH, currentName );
                if ( size != 0 )
                ret = QString::fromLocal8Bit( currentName );
            } )
