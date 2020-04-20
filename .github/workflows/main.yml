@@ -29,7 +29,7 @@ jobs:
         run: |
             call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
             cd qt-3.3.x-p8
-            set QTDIR="d:\a\qt3win\qt3win\qt-3.3.x-p8"
+            set QTDIR="d:\a\qt3win\qt3win\qt-3.3.x-p8\bin"
             set PATH=%QTDIR%\bin;%PATH%
             pconfigure.bat
             configure-msvc.bat
