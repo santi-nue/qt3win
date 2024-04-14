@@ -1,4 +1,4 @@
-@echo off
+@echo on
 ::if  not exist "%QTDIR%\bin\progress.exe" (
 	(
 	"%QTDIR%\misc\findpath\findpath" mingw32-make.exe >nul
