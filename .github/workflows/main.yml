@@ -14,7 +14,6 @@ jobs:
         path: msvc420
 
     - name: Build wrappers
-      shell: cmd
       run: |
         call .\msvc420\bin\VCVARS32.BAT x86
         cd qt-3.3.x-p8
@@ -23,4 +22,5 @@ jobs:
         dir
         pconfigure.bat
         configure-msvc.bat
-
+      shell: cmd
+      
