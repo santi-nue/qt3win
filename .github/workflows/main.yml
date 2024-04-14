@@ -1,37 +1,26 @@
----
 name: Build
 
-on:
-  push:
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
-  pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
+on: push
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
-      fail-fast: false
+    runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v1
-        with:
-          submodules: true
+    - uses: actions/checkout@v3
 
-      - name: Build (Windows)
-        if: startsWith(matrix.os, 'windows')
-        run: |
-            call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
-            cd qt-3.3.x-p8
-            set QTDIR="d:\a\qt3win\qt3win\qt-3.3.x-p8\bin"
-            set PATH=%QTDIR%\bin;%PATH%
-            pconfigure.bat
-            configure-msvc.bat
-        shell: cmd
+    - uses: actions/checkout@v3
+      with:
+        repository: 'itsmattkc/msvc420'
+        path: msvc420
+
+    - name: Build wrappers
+      shell: cmd
+      run: |
+        call .\msvc420\bin\VCVARS32.BAT x86
+        cd qt-3.3.x-p8
+        set QTDIR="d:\a\qt3win\qt3win\qt-3.3.x-p8\bin"
+        set PATH=%QTDIR%\bin;%PATH%
+        pconfigure.bat
+        configure-msvc.bat
 
