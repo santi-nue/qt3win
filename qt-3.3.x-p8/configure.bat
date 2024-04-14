@@ -1,7 +1,7 @@
 ::
 :: $Id: configure.bat 1341 2005-09-30 15:37:08Z chehrlic $
 ::
-@echo off
+@echo on
 
 :: setup some vars 
 if not "%QTDIR%"=="" (
