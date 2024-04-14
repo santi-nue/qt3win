@@ -20,5 +20,26 @@ jobs:
           cd qt-3.3.x-p8
           set QTDIR="d:\a\qt3win\qt3win\qt-3.3.x-p8\bin"
           set PATH=%Qt D QIR%\bin;%PATH%
-          nmake -f Makefile.win32-msvc
+          set MAKE=nmake
+          set QMAKESPEC=win32-msvc
+          set MAKEFILE=Makefile.win32-msvc
+          IF NOT EXIST include\qconfig.h copy misc\qconfig.h include
+          IF NOT EXIST include\qmodules.h copy misc\qmodules.h include
+          cd misc\link_includes
+          IF NOT EXIST tmp  mkdir tmp
+          %MAKE% -f %MAKEFILE%
+          if ERRORLEVEL 1 set ERR=1
+          cd ..\..
+          if %ERR% == 1 goto ERROR
+          bin\link_includes
+          cd misc\configure
+          IF NOT EXIST tmp  mkdir tmp
+          %MAKE% -f %MAKEFILE%
+          if ERRORLEVEL 1 set ERR=1
+          cd ..\..
+          if %ERR% == 1 goto ERROR
+          IF NOT EXIST qmake\tmp  mkdir qmake\tmp 
+          copy "qmake\%MAKEFILE%" "qmake\Makefile" 
+          copy "%MAKEFILE%" "Makefile"
+          bin\configure %* 
        
